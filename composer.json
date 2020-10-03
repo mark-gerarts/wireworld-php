@@ -1,0 +1,27 @@
+{
+    "name": "mark-gerarts/wireworld-php",
+    "description": "Wireworld cellular automaton written in PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mark Gerarts",
+            "email": "mark.gerarts@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "WireWorld\\": "src/"
+        }
+    },
+    "require": {
+        "symfony/filesystem": "^5.1",
+        "webmozart/assert": "^1.9",
+        "php": ">=7.4",
+        "ext-readline": "*"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.1",
+        "phpunit/phpunit": "^9.4",
+        "nascom/grumphp-symfony": "dev-master"
+    }
+}

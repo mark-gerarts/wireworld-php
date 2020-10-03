@@ -1,0 +1,20 @@
+grumphp:
+    ascii:
+        succeeded: ~
+        failed: ~
+    tasks:
+        git_blacklist:
+            keywords:
+                - '(var_)?dump\(.*\);*'
+                - 'die(;|\(.*\));*'
+                - 'exit(;|\(.*\));*'
+            regexp_type: P
+            triggered_by:
+                - 'php'
+                - 'twig'
+        phpcs:
+            standard: './vendor/nascom/grumphp-symfony/src/CodingStandards/Symfony'
+        phpstan:
+            level: 1
+            ignore_patterns:
+                - '/.*DoctrineMigrations.*\.php/'
