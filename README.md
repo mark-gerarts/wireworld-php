@@ -5,6 +5,17 @@ in PHP.
 
 ![sample gif](./usage.gif)
 
+## Installation
+
+Requires PHP 7.4+ and composer.
+
+```console
+$ git clone https://github.com/mark-gerarts/wireworld-php.git
+$ cd wireworld-php/
+$ composer install
+$ chmod +x wireworld
+```
+
 ## Usage
 
 ```console
