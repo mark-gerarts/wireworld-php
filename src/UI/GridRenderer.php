@@ -41,13 +41,13 @@ final class GridRenderer
     private function renderCell(Cell $cell): string
     {
         if ($cell instanceof Connector) {
-            return '#';
+            return "░";
         }
         if ($cell instanceof ElectronHead) {
-            return 'H';
+            return "█";
         }
         if ($cell instanceof ElectronTail) {
-            return 't';
+            return "▒";
         }
         if ($cell instanceof EmptyCell) {
             return ' ';

@@ -8,6 +8,11 @@ use WireWorld\Cell\EmptyCell;
 
 final class Grid
 {
+
+    /**
+     * @var array<array<Cell>>
+     */
+
     private array $grid = [];
     private Dimensions $dimensions;
 

@@ -23,6 +23,9 @@ final class Position
         return $this->y;
     }
 
+    /**
+     * @return Position[]
+     */
     public function getNeighbours(): array
     {
         $increments = [-1, 0 , 1];

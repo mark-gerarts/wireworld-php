@@ -17,7 +17,9 @@
         "symfony/filesystem": "^5.1",
         "webmozart/assert": "^1.9",
         "php": ">=7.4",
-        "ext-readline": "*"
+        "ext-readline": "*",
+        "php-school/cli-menu": "^4.0",
+        "league/climate": "^3.5"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.1",

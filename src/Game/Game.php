@@ -8,12 +8,14 @@ use WireWorld\UI\GridRenderer;
 
 final class Game
 {
+    private Grid $originalGrid;
     private Grid $grid;
     private GridRenderer $gridRenderer;
 
     public function __construct(Grid $grid)
     {
         $this->gridRenderer = new GridRenderer();
+        $this->originalGrid = $grid;
         $this->grid = $grid;
     }
 
@@ -36,10 +38,13 @@ final class Game
         $this->grid = $newGrid;
     }
 
-    public function render(): void
+    public function render(): string
     {
-        $output = $this->gridRenderer->render($this->grid);
+        return $this->gridRenderer->render($this->grid);
+    }
 
-        echo "\n" . $output . "\n\n";
+    public function restart(): void
+    {
+        $this->grid = $this->originalGrid;
     }
 }

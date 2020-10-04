@@ -1,10 +1,10 @@
 <?php
 
 use WireWorld\WireWorld;
+use WireWorld\WireWorldCliMenu;
 
 require 'vendor/autoload.php';
 
-$args = array_slice($argv, 1);
-
-$wireWorld = new WireWorld();
-$wireWorld->main($args);
+$args = $argv;
+$args = array_slice($args, 1);
+WireWorld::main($args);

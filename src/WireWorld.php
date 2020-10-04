@@ -2,62 +2,86 @@
 
 namespace WireWorld;
 
+use League\CLImate\CLImate;
 use WireWorld\Exception\WireWorldException;
 use WireWorld\Schema\SchemaLoader;
 use WireWorld\Game\Game;
 
 final class WireWorld
 {
-    private SchemaLoader $schemaLoader;
-
-    public function __construct()
+    /**
+     * @param string[] $args
+     */
+    public static function main(array $args): void
     {
-        $this->schemaLoader = new SchemaLoader();
-    }
+        $schemaLoader = new SchemaLoader();
+        $climate = new CLImate();
+        $climate->arguments->add([
+            'mode' => [
+                'prefix' => 'm',
+                'longPrefix' => 'mode',
+                'defaultValue' => 'climenu'
+            ],
+            'help' => [
+                'prefix' => 'h',
+                'longPrefix' => 'help',
+                'noValue' => true
+            ]
+        ]);
+        $climate->arguments->parse($args);
 
-    public function main(array $args): void
-    {
+        if ($climate->arguments->defined('help')) {
+            self::printHelp();
+            return;
+        }
+
         if (empty($args[0])) {
             echo "Error: no schema provided.\n";
-            echo "Usage: ./wireworld path/to/schema.wir\n";
+            echo "Usage: ./wireworld path/to/schema.wire\n";
             return;
         }
 
         try {
-            $this->startWireWorld($args);
+            $mode = $climate->arguments->get('mode');
+            $grid = $schemaLoader->loadSchema($args[0]);
+            $game = new Game($grid);
+
+            self::startWireWorld($game, $mode);
         }
-        catch (WireWorldException $e) {
+        catch (WireWorldException | \InvalidArgumentException $e) {
             echo $e->getMessage() . "\n";
             return;
         }
     }
 
-    private function startWireWorld(array $args): void
+    private static function startWireWorld(Game $game, string $mode): void
     {
-        $grid = $this->schemaLoader->loadSchema($args[0]);
-        $game = new Game($grid);
-
-        echo "Starting simulation..\n";
-
-        $game->render();
-        while (true) {
-            $input = readline('Advance one step? [Y/n]: ');
-            if ($this->isTruthy($input)) {
-                $game->step();
-                $game->render();
-            }
-            else {
-                echo "Quitting simulation. Bye!\n";
-                break;
-            }
+        switch ($mode) {
+            case 'basic':
+                (new WireWorldBasic())->startWireWorld($game);
+                return;
+            case 'climenu':
+                (new WireWorldCliMenu())->startWireWorld($game);
+                return;
         }
+
+        throw new \InvalidArgumentException('Unsupported mode. Use either "basic" or "climenu"');
     }
 
-    private function isTruthy(string $input): bool
+    private static function printHelp(): void
     {
-        $input = trim($input);
-        $truthyValues = ['', 'y', 'Y', 'yes', 'Yes', '1'];
+        $help = [
+            'Wireworld simulator written in PHP.',
+            'wireworld [file] [-h] [-m mode]',
+            'Available options:',
+            '  -h --help: print this help',
+            '  -m --mode: climenu (default) or basic',
+            'Usage:',
+            '  ./wireworld path/to/schema.wire',
+            '  ./wireworld path/to/schema.wire --mode=basic',
+            ''
+        ];
 
-        return in_array($input, $truthyValues, true);
+        echo implode("\n", $help);
     }
 }

@@ -31,6 +31,10 @@ final class SchemaLoader
         return $grid;
     }
 
+    /**
+     * @param string[] $lines
+     * @return string[]
+     */
     private function padLines(array $lines): array
     {
         $maxWidth = $this->getMaxWidth($lines);
@@ -41,6 +45,11 @@ final class SchemaLoader
         );
     }
 
+    /**
+     * @param string[] $lines
+     * @return Grid
+     * @throws SchemaException
+     */
     private function parseLines(array $lines): Grid
     {
         $dimensions = $this->getDimensions($lines);
@@ -57,6 +66,10 @@ final class SchemaLoader
         return $grid;
     }
 
+    /**
+     * @param string[] $lines
+     * @return Dimensions
+     */
     private function getDimensions(array $lines): Dimensions
     {
         return new Dimensions(
@@ -65,6 +78,11 @@ final class SchemaLoader
         );
     }
 
+    /**
+     * @param string $filepath
+     * @return string[]
+     * @throws SchemaException
+     */
     private function readFile(string $filepath): array
     {
         $handle = fopen($filepath, 'rb');
@@ -82,6 +100,10 @@ final class SchemaLoader
         return $this->padLines($lines);
     }
 
+    /**
+     * @param string[] $lines
+     * @return int
+     */
     private function getMaxWidth(array $lines): int
     {
         $width = 0;
