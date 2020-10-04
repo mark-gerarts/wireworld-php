@@ -8,11 +8,9 @@ use WireWorld\Cell\EmptyCell;
 
 final class Grid
 {
-
     /**
      * @var array<array<Cell>>
      */
-
     private array $grid = [];
     private Dimensions $dimensions;
 
@@ -49,8 +47,8 @@ final class Grid
         $this->assertValidPosition($position);
         $neighbouringPositions = $position->getNeighbours();
         $neighbouringPositions = array_filter(
-          $neighbouringPositions,
-          [$this, 'isValidPosition']
+            $neighbouringPositions,
+            [$this, 'isValidPosition']
         );
 
         return array_map([$this, 'getCell'], $neighbouringPositions);
@@ -64,8 +62,8 @@ final class Grid
     private function isValidPosition(Position $position): bool
     {
         return $position->getX() >= 0
-          && $position->getX() < $this->dimensions->getWidth()
-          && $position->getY() >= 0
-          && $position->getY() < $this->dimensions->getHeight();
+            && $position->getX() < $this->dimensions->getWidth()
+            && $position->getY() >= 0
+            && $position->getY() < $this->dimensions->getHeight();
     }
 }
